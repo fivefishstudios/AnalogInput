@@ -106,10 +106,10 @@ float adcToCurrentReading(int aIntputValue){
   // convert aInputValue to calibrated current reading
   // we need to compute for different tiers because device is non-linear
   // Current calibration data 
-  float Current0AmpADCReading = 2703;
-  float Current1AmpADCReading = 2904;
-  float Current2AmpADCReading = 3119;
-  float Current3AmpADCReading = 3380;
+  float Current0AmpADCReading = 2682;
+  float Current1AmpADCReading = 2890;
+  float Current2AmpADCReading = 3116;
+  float Current3AmpADCReading = 3375;
   
   // 0 to 1Amp
   if (aInputValue >= Current0AmpADCReading && aInputValue <= Current1AmpADCReading) {  
@@ -130,13 +130,18 @@ float adcToCurrentReading(int aIntputValue){
 }
 
 void displayCurrentValue(float currentValue){
-  int textx = 0;
-  int texty = 60;
-  int barh = 25;
+  int textx = 85;
+  int texty = 90;
+  int barh = 50;
   int barradius = 1;
-  tft.fillRoundRect(textx, texty, SCREEN_WIDTH, barh, barradius, ILI9341_BLACK);
   tft.setCursor(textx, texty);
-  tft.println("Current: " + String(currentValue) + " A");
+  tft.println("Current");
+
+  tft.fillRoundRect(textx-55, texty+33, SCREEN_WIDTH, barh, barradius, ILI9341_BLACK);
+  tft.setCursor(textx-50, texty+40);
+  tft.setTextColor(ILI9341_YELLOW);
+  tft.setTextSize(5);
+  tft.println(String(currentValue) + " A");
 }
 
 void updateBarGraph(int aInputValue){
@@ -160,7 +165,7 @@ void displayADCRawValue(int aInputValue){
   int texty = 290;
   tft.fillRoundRect(textx, texty, SCREEN_WIDTH, 24, 1, ILI9341_BLACK);
   tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(2);
+  tft.setTextSize(1);
   tft.setCursor(textx, texty);
   tft.println("Raw Value:" + String(aInputValue));
 }
@@ -183,5 +188,5 @@ void loop() {
   displayCurrentValue(currentValue);
   updateBarGraph(aInputValue);
   displayADCRawValue(aInputValue);
-  delay(50);
+  delay(40);
 }
